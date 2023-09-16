@@ -1,8 +1,9 @@
 #include <benchmark/benchmark.h>
 #include <immintrin.h>
 
-auto f(__m512 a) { return _mm512_mul_ps(a, a); }
-float numericalIntegrationAvx(float a, float b, int n) {
+static float f(float a) { return a * a; }
+static auto f(__m512 a) { return _mm512_mul_ps(a, a); }
+static float numericalIntegrationAvx(float a, float b, int n) {
     auto dx = (b - a) / n;
     auto integral = f(a) / 2 + f(b) / 2;
     constexpr __m512 seq = {1.f, 2.f,  3.f,  4.f,  5.f,  6.f,  7.f,  8.f,
@@ -14,7 +15,7 @@ float numericalIntegrationAvx(float a, float b, int n) {
     auto incr = _mm512_set1_ps(16 * dx);
 
     for (int k = 1; k < n; k += 16) {
-        integralSum = _mm512_add_ps(intergralSum, f(v));
+        integralSum = _mm512_add_ps(integralSum, f(v));
         v = _mm512_add_ps(v, incr);
     }
 
