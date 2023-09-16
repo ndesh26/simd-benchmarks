@@ -14,7 +14,7 @@ static float numericalIntegration(float a, float b, int n) {
     return integral;
 }
 
-static void BM_numericalIntegration(benchmark::State& state) {
+static void scalar_auto_vectorization_avx512(benchmark::State& state) {
     // Perform setup here
     for (auto _ : state) {
         // This code gets timed
@@ -22,4 +22,4 @@ static void BM_numericalIntegration(benchmark::State& state) {
     }
 }
 // Register the function as a benchmark
-BENCHMARK(BM_numericalIntegration);
+BENCHMARK(scalar_auto_vectorization_avx512);
